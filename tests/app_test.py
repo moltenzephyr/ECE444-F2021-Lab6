@@ -1,7 +1,7 @@
 # this is app_test.py
 from pathlib import Path
 
-from project.app import app
+from project.app import app, init_db
 
 def test_index():
 	tester = app.test_client()
