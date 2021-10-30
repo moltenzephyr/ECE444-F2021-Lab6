@@ -2,7 +2,6 @@ import pytest
 import os
 import json
 from pathlib import Path
-
 from project.app import app, db
 
 TEST_DB = "test.db"
@@ -80,4 +79,13 @@ def test_delete_message(client):
     data = json.loads(rv.data)
     assert data["status"] == 1
 
+def test_search(client):
+    """Ensure the search functionality is working correctly"""
+    rv = client.get('/search/')
+    #data = json.loads(rv.data)
+    #assert data["status"] == 1 
+    #assert response.status_code == 200
+    assert rv.status_code == 200
+    #response = client.get("/search/", content_type="html/text")
+    #assert response.status_code == 200
 
