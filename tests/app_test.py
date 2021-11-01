@@ -1,5 +1,5 @@
 import pytest
-import os
+
 import json
 from pathlib import Path
 from project.app import app, db
@@ -13,10 +13,10 @@ def client():
     app.config["TESTING"] = True
     app.config["DATABASE"] = BASE_DIR.joinpath(TEST_DB)
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{BASE_DIR.joinpath(TEST_DB)}"
-
     db.create_all()  # setup
     yield app.test_client()  # tests run here
     db.drop_all()  # teardown
+
 
 def login(client, username, password):
     """Login helper function"""
@@ -73,6 +73,7 @@ def test_messages(client):
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
 
+
 def test_delete_message(client):
     """Ensure the messages are being deleted"""
     rv = client.get("/delete/1")
@@ -86,11 +87,10 @@ def test_delete_message(client):
 
 def test_search(client):
     """Ensure the search functionality is working correctly"""
-    rv = client.get('/search/')
-    #data = json.loads(rv.data)
-    #assert data["status"] == 1 
-    #assert response.status_code == 200
+    rv = client.get("/search/")
+    # data = json.loads(rv.data)
+    # assert data["status"] == 1
+    # assert response.status_code == 200
     assert rv.status_code == 200
-    #response = client.get("/search/", content_type="html/text")
-    #assert response.status_code == 200
-
+    # response = client.get("/search/", content_type="html/text")
+    # assert response.status_code == 200
